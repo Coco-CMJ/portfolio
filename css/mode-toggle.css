@@ -1,0 +1,169 @@
+/* ============================================
+   MODE TOGGLE BUTTON (Top Right)
+   ============================================ */
+
+#mode-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #5c5c5c;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: "Quicksand", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#mode-toggle-btn:hover {
+  background: linear-gradient(135deg, #3a3a5c, #2c2c4a);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35), 0 0 15px rgba(44, 152, 240, 0.2);
+  transform: translateY(-2px);
+  border-color: rgba(44, 152, 240, 0.4);
+}
+
+#mode-toggle-btn:active {
+  transform: translateY(0px) scale(0.97);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+#mode-toggle-btn .toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#mode-toggle-btn:hover .toggle-icon {
+  transform: rotate(90deg);
+}
+
+#mode-toggle-btn .toggle-label {
+  transition: opacity 0.3s ease;
+}
+
+/* Active state — when in creative mode */
+#mode-toggle-btn.creative-active {
+  background: linear-gradient(135deg, #6c5ce7, #a855f7);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 4px 24px rgba(108, 92, 231, 0.35), 0 0 20px rgba(168, 85, 247, 0.15);
+}
+
+#mode-toggle-btn.creative-active:hover {
+  background: linear-gradient(135deg, #7c6cf7, #b865ff);
+  box-shadow: 0 6px 32px rgba(108, 92, 231, 0.45), 0 0 25px rgba(168, 85, 247, 0.25);
+}
+
+
+/* ============================================
+   SIDEBAR LEFT POSITION OVERRIDE
+   ============================================ */
+
+#colorlib-aside {
+  left: 20px !important;
+}
+
+
+/* ============================================
+   CREATIVE MODE — Empty State
+   ============================================ */
+
+#creative-mode {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Quicksand", Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+#creative-mode::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+#creative-mode .creative-placeholder {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+#creative-mode .creative-placeholder h2 {
+  font-family: "Campton", sans-serif;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+}
+
+#creative-mode .creative-placeholder p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.15);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* ============================================
+   TRANSITION ANIMATIONS
+   ============================================ */
+
+#default-mode,
+#creative-mode {
+  animation: fadeInMode 0.5s ease-out;
+}
+
+@keyframes fadeInMode {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive — mobile adjustments */
+@media screen and (max-width: 768px) {
+  #mode-toggle-btn {
+    top: 12px;
+    right: 12px;
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+
+  #mode-toggle-btn .toggle-label {
+    display: none;
+  }
+
+  #mode-toggle-btn .toggle-icon {
+    font-size: 18px;
+  }
+}
