@@ -136,11 +136,12 @@ figure figcaption {
 @media screen and (max-width: 768px) {
   #colorlib-aside {
     width: 300px;
-    -moz-transform: translateX(-300px);
-    -webkit-transform: translateX(-300px);
-    -ms-transform: translateX(-300px);
-    -o-transform: translateX(-300px);
-    transform: translateX(-300px);
+    -moz-transform: translateX(-310px);
+    -webkit-transform: translateX(-310px);
+    -ms-transform: translateX(-310px);
+    -o-transform: translateX(-310px);
+    transform: translateX(-310px);
+    left: 0;
     padding-top: 4em;
   }
 }
@@ -321,9 +322,16 @@ figure figcaption {
   width: calc(100% - 20px);
   border-radius: 30px;
   overflow: hidden;
-  background: #fff url(../images/loader.gif) no-repeat center center;
+  background: #fff;
   float: left;
   clear: both;
+}
+
+@media screen and (max-width: 768px) {
+  #colorlib-hero {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
 }
 
 #colorlib-hero .flexslider {
@@ -345,6 +353,12 @@ figure figcaption {
   background-position: center center;
   height: 100% !important;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  #colorlib-hero .flexslider .slides li {
+    background-position: 80% center;
+  }
 }
 
 #colorlib-hero .overlay {
@@ -412,7 +426,8 @@ figure figcaption {
 
 @media screen and (max-width: 768px) {
   #colorlib-hero .flexslider .slider-text>.slider-text-inner {
-    text-align: center;
+    text-align: left;
+    padding: 1.5em;
   }
 }
 
@@ -457,7 +472,11 @@ figure figcaption {
 
 @media screen and (max-width: 768px) {
   #colorlib-hero .flexslider .slider-text>.slider-text-inner h1 {
-    font-size: 28px;
+    font-size: 24px;
+  }
+
+  #colorlib-hero .flexslider .slider-text>.slider-text-inner h1.welcome-heading {
+    font-size: 32px;
   }
 }
 
@@ -531,8 +550,8 @@ body.offcanvas #colorlib-aside {
   -o-transform: translateX(0);
   transform: translateX(0);
   width: 300px;
-  background: #344cac;
-  z-index: 999;
+  background: linear-gradient(135deg, #F3D5B5, #E8B4B8);
+  z-index: 1001;
   position: fixed;
 }
 
