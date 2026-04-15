@@ -106,7 +106,7 @@ figure figcaption {
 
 #colorlib-aside {
   padding-top: 3em;
-  padding-bottom: 40px;
+  padding-bottom: 80px;
   float: left;
   width: 300px;
   position: fixed;
@@ -136,11 +136,12 @@ figure figcaption {
 @media screen and (max-width: 768px) {
   #colorlib-aside {
     width: 300px;
-    -moz-transform: translateX(-310px);
-    -webkit-transform: translateX(-310px);
-    -ms-transform: translateX(-310px);
-    -o-transform: translateX(-310px);
-    transform: translateX(-310px);
+    -moz-transform: translateX(-100vw);
+    -webkit-transform: translateX(-100vw);
+    -ms-transform: translateX(-100vw);
+    -o-transform: translateX(-100vw);
+    transform: translateX(-100vw);
+    visibility: hidden;
     left: 0;
     padding-top: 4em;
   }
@@ -329,8 +330,8 @@ figure figcaption {
 
 @media screen and (max-width: 768px) {
   #colorlib-hero {
-    margin: 10px;
-    width: calc(100% - 20px);
+    margin: 20px;
+    width: calc(100% - 40px);
   }
 }
 
@@ -357,7 +358,7 @@ figure figcaption {
 
 @media screen and (max-width: 768px) {
   #colorlib-hero .flexslider .slides li {
-    background-position: 80% center;
+    background-position: 95% center;
   }
 }
 
@@ -428,6 +429,8 @@ figure figcaption {
   #colorlib-hero .flexslider .slider-text>.slider-text-inner {
     text-align: left;
     padding: 1.5em;
+    vertical-align: bottom !important;
+    padding-bottom: 4em;
   }
 }
 
@@ -549,6 +552,7 @@ body.offcanvas #colorlib-aside {
   -ms-transform: translateX(0);
   -o-transform: translateX(0);
   transform: translateX(0);
+  visibility: visible;
   width: 300px;
   background: linear-gradient(135deg, #F3D5B5, #E8B4B8);
   z-index: 1001;
