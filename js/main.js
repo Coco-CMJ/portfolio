@@ -293,30 +293,36 @@
 			
 			if (!text) return;
 
-			// Use a temporary textarea for copying - most reliable for file:// protocols
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(text).then(function() {
+					showToast(message);
+				}).catch(function(err) {
+					console.error('Could not copy text: ', err);
+					fallbackCopy(text, message);
+				});
+			} else {
+				fallbackCopy(text, message);
+			}
+		});
+
+		function fallbackCopy(text, message) {
 			var textArea = document.createElement("textarea");
 			textArea.value = text;
-			
-			// Ensure it's not visible
 			textArea.style.position = "fixed";
 			textArea.style.left = "-9999px";
 			textArea.style.top = "0";
 			
 			document.body.appendChild(textArea);
+			textArea.focus();
 			textArea.select();
-			textArea.setSelectionRange(0, 99999); // For mobile devices
-
 			try {
 				var successful = document.execCommand('copy');
-				if (successful) {
-					showToast(message);
-				}
+				if (successful) showToast(message);
 			} catch (err) {
-				console.error('Unable to copy', err);
+				console.error('Fallback copy failed', err);
 			}
-
 			document.body.removeChild(textArea);
-		});
+		}
 	};
 
 	var showToast = function(message) {

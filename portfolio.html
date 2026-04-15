@@ -1,17 +1,281 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Portfolio - My Projects</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/style.css">
+	<style>
+		body {
+			background: #F6F1EE;
+			font-family: 'Poppins', sans-serif;
+			color: #5c5c5c;
+			margin: 0;
+			padding: 0;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.portfolio-header {
+			width: 100%;
+			position: relative;
+		}
+
+		.btn-back {
+			position: absolute;
+			top: 40px;
+			left: 40px;
+			width: 50px;
+			height: 50px;
+			background: rgba(232, 180, 184, 0.2);
+			color: #e8b4b8;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-decoration: none;
+			transition: all 0.3s ease;
+			z-index: 10;
+		}
+
+		.btn-back svg {
+			width: 24px;
+			height: 24px;
+			fill: currentColor;
+		}
+
+		.btn-back:hover {
+			background: #e8b4b8;
+			color: #fff;
+			transform: scale(1.1);
+		}
+
+		.section-title {
+			color: #5c5c5c;
+			font-size: 22px;
+			font-weight: 600;
+			margin: 0 0 20px 0;
+			text-align: left;
+			width: 100%;
+			max-width: 1400px;
+		}
+
+		.portfolio-grid-container {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 50px 80px 80px;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.portfolio-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 40px;
+			width: 100%;
+			max-width: 1400px;
+			margin-bottom: 50px;
+		}
+
+		.portfolio-square {
+			background-color: #f3d5b5;
+			border-radius: 20px;
+			cursor: pointer;
+			background-size: cover;
+			background-position: center;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+			position: relative;
+			overflow: hidden;
+			aspect-ratio: 1; /* Makes them perfect squares */
+		}
+
+		.portfolio-square::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+
+		.portfolio-square:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+		}
+
+		.portfolio-square:hover::after {
+			opacity: 1;
+		}
+
+		@media screen and (max-width: 992px) {
+			.portfolio-grid {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+
+		@media screen and (max-width: 576px) {
+			.portfolio-grid-container {
+				padding: 80px 20px 40px;
+			}
+			.btn-back {
+				top: 15px;
+				left: 15px;
+				width: 40px;
+				height: 40px;
+			}
+			.portfolio-grid {
+				grid-template-columns: 1fr;
+				gap: 20px;
+			}
+			.portfolio-square {
+				min-height: auto;
+			}
+		}
+
+		/* Modal overlay */
+		.portfolio-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(92, 92, 92, 0.9);
+			backdrop-filter: blur(5px);
+			-webkit-backdrop-filter: blur(5px);
+			z-index: 9999;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.4s ease;
+			padding: 40px; /* nice gap on four sides */
+			box-sizing: border-box;
+		}
+
+		.portfolio-modal.active {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.modal-content {
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			border-radius: 20px;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			position: relative;
+			box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+			transform: scale(0.95);
+			transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		}
+
+		.portfolio-modal.active .modal-content {
+			transform: scale(1);
+		}
+
+		.modal-close {
+			position: absolute;
+			top: -15px;
+			right: -15px;
+			width: 40px;
+			height: 40px;
+			background: #e8b4b8;
+			color: #fff;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24px;
+			font-weight: bold;
+			cursor: pointer;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+			transition: transform 0.3s ease, background 0.3s ease;
+		}
+
+		.modal-close:hover {
+			transform: scale(1.1) rotate(90deg);
+			background: #F3D5B5;
+		}
+
+		@media screen and (max-width: 768px) {
+			.portfolio-modal {
+				padding: 20px;
+			}
+		}
+	</style>
 </head>
-<body style="background: #F6F1EE; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: 'Poppins', sans-serif; color: #5c5c5c;">
-	<div style="text-align: center;">
-		<h1>Portfolio Page</h1>
-		<p>This page is currently blank. Content coming soon!</p>
-		<a href="index.html" style="color: #e8b4b8; text-decoration: none; border-bottom: 2px solid #e8b4b8;">Back to Home</a>
+
+<body>
+	<div class="portfolio-header">
+		<a href="index.html" class="btn-back" title="Back to Home">
+			<svg viewBox="0 0 24 24">
+				<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+			</svg>
+		</a>
 	</div>
+
+	<div class="portfolio-grid-container">
+		<h2 class="section-title">Personal Projects</h2>
+		<div class="portfolio-grid">
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/Project 1.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/Project 2.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/Project 3.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/Project 4.jpg');"></div>
+		</div>
+
+		<h2 class="section-title">Internship Projects</h2>
+		<div class="portfolio-grid">
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/img-1.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/img-3.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/minos-illus.jpg');"></div>
+			<div class="portfolio-square js-modal-trigger" style="background-image: url('images/Project 5.jpg');"></div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="portfolio-modal" id="portfolioModal">
+		<div class="modal-content" id="modalImage">
+			<div class="modal-close" id="modalClose">×</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const triggers = document.querySelectorAll('.js-modal-trigger');
+			const modal = document.getElementById('portfolioModal');
+			const modalImg = document.getElementById('modalImage');
+			const closeBtn = document.getElementById('modalClose');
+
+			triggers.forEach(trigger => {
+				trigger.addEventListener('click', function() {
+					// Get the background image url
+					const bg = this.style.backgroundImage;
+					modalImg.style.backgroundImage = bg;
+					modal.classList.add('active');
+				});
+			});
+
+			closeBtn.addEventListener('click', function() {
+				modal.classList.remove('active');
+			});
+
+			// Close when clicking outside the content
+			modal.addEventListener('click', function(e) {
+				if (e.target === modal) {
+					modal.classList.remove('active');
+				}
+			});
+		});
+	</script>
 </body>
+
 </html>

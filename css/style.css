@@ -138,18 +138,18 @@ figure figcaption {
 @media screen and (max-width: 768px) {
   #colorlib-aside {
     width: 300px;
-    -moz-transform: translateX(-100vw);
-    -webkit-transform: translateX(-100vw);
-    -ms-transform: translateX(-100vw);
-    -o-transform: translateX(-100vw);
-    transform: translateX(-100vw);
+    -moz-transform: translateX(-350px);
+    -webkit-transform: translateX(-350px);
+    -ms-transform: translateX(-350px);
+    -o-transform: translateX(-350px);
+    transform: translateX(-350px);
     visibility: hidden;
-    left: 0;
-    padding-top: 4em;
-    top: 0 !important;
-    bottom: 0 !important;
+    left: 20px;
+    padding-top: 3em;
+    top: 20px !important;
+    bottom: 20px !important;
     height: auto !important;
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px;
   }
 }
 
@@ -436,8 +436,9 @@ figure figcaption {
 }
 
 @media screen and (max-width: 768px) {
+
   #colorlib-hero .container-fluid,
-  #colorlib-hero .container-fluid > .row {
+  #colorlib-hero .container-fluid>.row {
     height: 100%;
   }
 
@@ -576,6 +577,7 @@ body.offcanvas #colorlib-aside {
   background: linear-gradient(135deg, #F3D5B5, #E8B4B8);
   z-index: 1001;
   position: fixed;
+  border-radius: 30px;
 }
 
 body.offcanvas #colorlib-main,
@@ -611,11 +613,15 @@ body.offcanvas .colorlib-nav-toggle {
 .colorlib-about,
 .colorlib-services,
 .colorlib-contact {
-  padding-top: 4em;
-  padding-bottom: 9em;
+  padding-top: 2em;
+  padding-bottom: 6em;
   clear: both;
   width: 100%;
   display: block;
+}
+
+.colorlib-about {
+  padding-top: 8em;
 }
 
 @media screen and (max-width: 768px) {
@@ -628,8 +634,12 @@ body.offcanvas .colorlib-nav-toggle {
   .colorlib-about,
   .colorlib-services,
   .colorlib-contact {
-    padding-top: 5em;
-    padding-bottom: 8em;
+    padding-top: 3em;
+    padding-bottom: 5em;
+  }
+
+  .colorlib-about {
+    padding-top: 6em;
   }
 }
 
@@ -2481,7 +2491,7 @@ body.offcanvas .colorlib-nav-toggle {
   height: 600px;
   gap: 15px;
   padding: 0 15px;
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 .pill-card {
@@ -2506,7 +2516,7 @@ body.offcanvas .colorlib-nav-toggle {
 }
 
 .pill-card.active::after {
-  background: linear-gradient(to top, rgba(232, 180, 184, 0.98) 0%, rgba(232, 180, 184, 0.6) 45%, transparent 75%);
+  background: linear-gradient(to top, rgba(230, 151, 157, 0.98) 0%, rgba(230, 151, 157, 0.6) 45%, transparent 75%);
   border-radius: 60px;
 }
 
