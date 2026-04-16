@@ -2574,6 +2574,11 @@ body.offcanvas .colorlib-nav-toggle {
   line-height: 1.5;
   text-align: justify;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 768px) {
@@ -2721,10 +2726,7 @@ body.offcanvas .colorlib-nav-toggle {
   transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.contact-item:hover i {
-  transform: scale(1.1);
-  background: rgba(232, 180, 184, 0.2);
-}
+
 
 .contact-item span,
 .contact-item a {
