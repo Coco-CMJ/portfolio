@@ -1,562 +1,2439 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Portfolio - My Projects</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/icomoon.css">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-	
-	<style>
-		/* Global */
-		body {
-			background: #F6F1EE;
-			font-family: 'Poppins', sans-serif;
-			color: #5c5c5c;
-			margin: 0;
-			padding: 0;
-			height: 100vh;
-			display: flex;
-			overflow: hidden;
-		}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Portfolio - Premium Experience</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #2d3436;
+            --bg-color: #f8f9fa;
+        }
 
-		.app-container {
-			display: flex;
-			width: 100%;
-			height: 100%;
-		}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		/* Blob Background in Main Content */
-		.main-content {
-			flex: 1;
-			position: relative;
-			height: 100vh;
-			overflow-y: auto;
-			padding: 40px 60px;
-			box-sizing: border-box;
-		}
-        
-		.main-content::-webkit-scrollbar {
-			width: 8px;
-		}
-		.main-content::-webkit-scrollbar-thumb {
-			background: rgba(92, 92, 92, 0.2);
-			border-radius: 10px;
-		}
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-		.blob {
-			position: fixed;
-			border-radius: 50%;
-			filter: blur(80px);
-			opacity: 0.5;
-			z-index: -1;
-			animation: float 12s infinite ease-in-out alternate;
-		}
-		.blob-1 {
-			width: 400px; height: 400px;
-			background: #b8d8d8; /* Swapped to green */
-			top: -100px; right: -50px;
-		}
-		.blob-2 {
-			width: 500px; height: 500px;
-			background: #f3d5b5;
-			bottom: -100px; right: 10%;
-			animation-delay: -4s;
-			animation-duration: 15s;
-		}
-		.blob-3 {
-			width: 500px; height: 500px;
-			background: #e8b4b8; /* Swapped to pink, made bigger and more left */
-			top: 20%; left: -5%;
-			animation-delay: -7s;
-		}
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 25px;
+            left: 28px;
+            font-size: 13px;
+            text-decoration: none;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 100;
+        }
 
-		@keyframes float {
-			0% { transform: translateY(0) scale(1); }
-			100% { transform: translateY(-40px) scale(1.05); }
-		}
+        .back-btn:hover {
+            transform: translateX(-5px);
+            opacity: 0.7;
+        }
 
-		/* Header & Back Button */
-		.sidebar-header {
-			padding: 40px 0 20px 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.back-link {
-			display: inline-flex;
-			align-items: center;
-			color: #5c5c5c;
-			font-size: 16px;
-			font-weight: 500;
-			text-decoration: none;
-			transition: all 0.3s ease;
-			cursor: pointer;
-		}
-		.back-link i {
-			margin-right: 5px;
-			font-size: 14px;
-		}
-		.back-link:hover {
-			color: #e8b4b8;
-			transform: translateX(-5px);
-		}
+        .back-btn::before {
+            content: "<";
+            font-size: 18px;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
 
-		/* Sidebar Layout */
-		.sidebar-container {
-			width: 140px;
-			min-width: 140px;
-			height: 100vh;
-			background: #ffffff;
-			display: flex;
-			flex-direction: column;
-			position: relative;
-			z-index: 10;
-		}
+        .back-btn:hover::before {
+            transform: translateX(-5px);
+        }
 
-		.sidebar-scroll {
-			flex: 1;
-			overflow-y: auto;
-			ms-overflow-style: none; 
-			scrollbar-width: none;
-			padding: 0 0 80px 0;
-			position: relative;
-		}
-		.sidebar-scroll::-webkit-scrollbar {
-			display: none;
-		}
+        /* =============================================
+           LIQUID SIDEBAR NAVIGATION
+           ============================================= */
+        .liquid-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 110px;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
 
-		.nav-item {
-			width: 140px;
-			height: 120px;
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			background: transparent;
-			transition: all 0.3s ease;
-		}
+        .sidebar-inner {
+            position: relative;
+            width: 100%;
+            overflow: visible;
+        }
 
-		.temp-circle {
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			background: #f6f1ee;
-			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: #b8d8d8;
-			font-weight: bold;
-			font-size: 18px;
-		}
 
-		.nav-item:hover .temp-circle {
-			transform: scale(1.1);
-			background: #f3d5b5;
-		}
 
-		/* Active Cutout Logic for Desktop */
-		.nav-item.active {
-			background: #F6F1EE;
-			border-top-left-radius: 35px;
-			border-bottom-left-radius: 35px;
-			width: 120px;
-			margin-left: 20px;
-		}
-		.nav-item.active .temp-circle {
-			background: #e8b4b8;
-			color: #fff;
-			transform: scale(1.2);
-			box-shadow: 0 10px 20px rgba(232, 180, 184, 0.4);
-		}
+        .sidebar-dots {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 110px;
+            padding: 110px 0;
+            gap: 37px;
+        }
 
-		.nav-item.active::before {
-			content: '';
-			position: absolute;
-			top: -35px;
-			right: 0;
-			width: 35px;
-			height: 35px;
-			border-bottom-right-radius: 35px;
-			box-shadow: 15px 15px 0 15px #F6F1EE;
-			pointer-events: none;
-		}
+        .nav-dot {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            outline: none;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
 
-		.nav-item.active::after {
-			content: '';
-			position: absolute;
-			bottom: -35px;
-			right: 0;
-			width: 35px;
-			height: 35px;
-			border-top-right-radius: 35px;
-			box-shadow: 15px -15px 0 15px #F6F1EE;
-			pointer-events: none;
-		}
+        .nav-dot:hover {
+            background: #ffffff;
+            transform: scale(1.06);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
 
-		/* Scroll Helper (simple "v") */
-		.scroll-helper {
-			position: absolute;
-			bottom: 15px;
-			left: 50%;
-			transform: translateX(-50%);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: #5c5c5c;
-			animation: bounce 2s infinite;
-			pointer-events: none;
-			transition: opacity 0.3s ease;
-			font-size: 18px;
-		}
+        .nav-dot.active {
+            background: linear-gradient(135deg, #e8b4b8, #f3d5b5);
+            transform: scale(1.12);
+            box-shadow: 0 4px 18px rgba(232, 180, 184, 0.4);
+        }
 
-		@keyframes bounce {
-			0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-			40% { transform: translateX(-50%) translateY(-10px); }
-			60% { transform: translateX(-50%) translateY(-5px); }
-		}
+        .nav-dot.active:hover {
+            transform: scale(1.16);
+        }
 
-		/* Project Display Area */
-		.project-display {
-			max-width: 1000px;
-			margin: 0 auto;
-			opacity: 1;
-			transform: translateY(0);
-			transition: all 0.4s ease-out;
-		}
+        .nav-dot img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
 
-		.temp-image {
-			background: linear-gradient(135deg, rgba(232, 180, 184, 0.2), rgba(243, 213, 181, 0.2));
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: rgba(92, 92, 92, 0.5);
-			font-weight: 500;
-			font-size: 18px;
-			border-radius: 20px;
-			border: 2px dashed rgba(232, 180, 184, 0.4);
-		}
+        .more-icon {
+            transition: all 0.4s ease;
+        }
 
-		.project-hero {
-			width: 100%;
-			height: 400px;
-			margin-bottom: 40px;
-			border-radius: 30px;
-		}
+        .more-icon circle {
+            transition: fill 0.4s ease;
+        }
 
-		.project-info {
-			margin-bottom: 60px;
-			background: rgba(255, 255, 255, 0.4);
-			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px);
-			padding: 40px;
-			border-radius: 30px;
-			box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-		}
+        .nav-dot.active .more-icon circle {
+            fill: #f6f1ee;
+        }
 
-		.project-title {
-			font-size: 32px;
-			font-weight: 700;
-			color: #5c5c5c;
-			margin: 0 0 20px 0;
-			line-height: 1.2;
-		}
+        /* =============================================
+           BACKGROUND BLOBS
+           ============================================= */
+        .blob {
+            position: fixed;
+            border-radius: 40%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: 0;
+            animation: float 15s infinite ease-in-out alternate;
+            pointer-events: none;
+        }
 
-		.project-desc {
-			font-size: 16px;
-			line-height: 1.8;
-			color: #777;
-			margin: 0;
-		}
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
 
-		.wip-section {
-			margin-bottom: 60px;
-		}
+            50% {
+                transform: translate(40px, -50px) scale(1.1);
+            }
 
-		.wip-title {
-			font-size: 22px;
-			font-weight: 600;
-			margin: 0 0 20px 0;
-			color: #5c5c5c;
-		}
+            100% {
+                transform: translate(-20px, 30px) scale(0.9);
+            }
+        }
 
-		.wip-grid {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 30px;
-		}
+        /* =============================================
+           PROJECT CONTENT
+           ============================================= */
+        .project-content {
+            position: absolute;
+            left: 150px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
 
-		.wip-card {
-			height: 250px;
-			border-radius: 20px;
-		}
+        .project-title {
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: -1px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
 
-		/* Responsive */
-		@media screen and (max-width: 992px) {
-			.wip-grid {
-				grid-template-columns: repeat(2, 1fr);
-			}
-		}
+        /* Project Details Layout */
+        .project-details {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 80px 100px;
+            padding: 80px 100px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-		@media screen and (max-width: 768px) {
-			.app-container {
-				flex-direction: column;
-			}
-			.sidebar-container {
-				width: 100%;
-				height: 100px;
-				min-height: 100px;
-				flex-direction: row;
-			}
-			.sidebar-header {
-				padding: 0 20px;
-				height: 100%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.back-link span {
-				display: none; /* Hide 'Back' text, only arrow icon visible */
-			}
-			.back-link i {
-				font-size: 24px;
-				margin: 0;
-			}
-			.back-link:hover {
-				transform: translateX(-3px);
-			}
-			
-			.sidebar-scroll {
-				display: flex;
-				flex-direction: row;
-				padding: 0 20px 0 0;
-				align-items: center;
-				overflow-y: hidden;
-				overflow-x: auto;
-			}
-			.nav-item {
-				width: 80px;
-				height: 100px;
-				flex-shrink: 0;
-			}
-			/* Mobile Active Cutout Logic - pointing Downwards */
-			.nav-item.active {
-				margin-left: 0;
-				margin-bottom: 15px; /* Pulls the white shape up, leaving gap for f6f1ee at bottom */
-				background: #F6F1EE;
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-				border-bottom-left-radius: 25px;
-				border-bottom-right-radius: 25px;
-				height: 85px;
-				width: 96px;
-			}
-			.nav-item.active::before {
-				bottom: auto; top: 0;
-				right: auto; left: -25px;
-				width: 25px; height: 25px;
-				border-bottom-right-radius: 0;
-				border-top-right-radius: 25px;
-				box-shadow: 10px -10px 0 10px #F6F1EE;
-			}
-			.nav-item.active::after {
-				bottom: auto; top: 0;
-				right: -25px;
-				width: 25px; height: 25px;
-				border-top-right-radius: 0;
-				border-top-left-radius: 25px;
-				box-shadow: -10px -10px 0 10px #F6F1EE;
-			}
-			.temp-circle {
-				width: 50px; height: 50px;
-			}
-			.scroll-helper {
-				display: none;
-			}
-			.main-content {
-				padding: 30px 20px;
-			}
-			.project-hero {
-				height: 250px;
-			}
-		}
+        /* Custom Scrollbar for Project Details */
+        .project-details::-webkit-scrollbar {
+            width: 8px;
+        }
 
-		@media screen and (max-width: 576px) {
-			.wip-grid {
-				grid-template-columns: 1fr;
-			}
-		}
-	</style>
+        .project-details::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .project-details::-webkit-scrollbar-thumb {
+            background: rgba(232, 180, 184, 0.6);
+            /* Soft pink */
+            border-radius: 10px;
+        }
+
+        .project-details::-webkit-scrollbar-thumb:hover {
+            background: rgba(232, 180, 184, 0.9);
+        }
+
+        .project-details.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .scroll-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mockups Section */
+        .mockups-section {
+            width: 100%;
+            margin-top: 10vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            padding-bottom: 20px;
+        }
+
+        /* UIUX Section */
+        .uiux-section {
+            width: 100%;
+            margin-top: 5vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            padding-bottom: 80px;
+        }
+
+        .mockup-title {
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: -1px;
+            color: #5c5c5c;
+            margin: 0;
+            text-align: center;
+        }
+
+        .mockups-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .mockup-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            height: 380px;
+        }
+
+        .mockup-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* UI/UX Layout Rules */
+        .uiux-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1100px;
+            gap: 60px;
+            margin-top: 20px;
+        }
+
+        .uiux-left {
+            flex: 1.2;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .uiux-circle {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: #e8b4b8;
+            filter: blur(80px);
+            z-index: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10%;
+        }
+
+        .uiux-left img {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .uiux-right {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .uiux-title {
+            text-align: center;
+            width: 100%;
+        }
+
+        .uiux-desc {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: #5c5c5c;
+            line-height: 1.6;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .uiux-divider {
+            width: 160px;
+            height: 4px;
+            background: #e8b4b8;
+            border: none;
+            border-radius: 2px;
+            margin: 5px 0 10px 0;
+            display: inline-block;
+        }
+
+        /* Auto-Scrolling Carousel */
+        .uiux-carousel-container {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            margin-top: 80px;
+            padding: 20px 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: max-content;
+            animation: carouselScroll 50s linear infinite;
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-track img {
+            height: 480px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            background: #fff;
+        }
+
+        @keyframes carouselScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .prototype-link {
+            color: #e8b4b8;
+            text-decoration: underline;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .prototype-link:hover {
+            color: #6a0b25;
+        }
+
+        .white-box {
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-radius: 32px;
+            padding: 35px 50px;
+            max-width: 740px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.04);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            backdrop-filter: blur(10px);
+        }
+
+        .pills-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .pill-tag {
+            background: #e8b4b8;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #f6f1ee;
+            letter-spacing: 1px;
+        }
+
+        .project-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #5c5c5c;
+            text-align: justify;
+            margin: 0 0 40px 0;
+            max-width: 100%;
+        }
+
+        /* =============================================
+           PROJECT SHOWCASE (New Clean Layout)
+           ============================================= */
+        .project-showcase {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .showcase-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            width: 100%;
+            align-items: start;
+        }
+
+        .brand-grid-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .intro-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+            margin-bottom: 20px;
+        }
+
+        /* Logo Logic Styling */
+        .logo-logic-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .logo-logic-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-logic-item img {
+            height: 90px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.9;
+        }
+
+        .logo-logic-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            color: #5c5c5c;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-logic-operator {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #6a0b25;
+            font-weight: 700;
+            padding-bottom: 10px;
+        }
+
+        .horizontal-line {
+            width: 100%;
+            height: 2px;
+            background-color: #e8b4b8;
+            margin: 5px 0 10px;
+            border: none;
+        }
+
+        .horizontal-layout-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #5c5c5c;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Color Scheme */
+        .color-scheme-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .color-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .color-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            /* Added a subtle border instead of inset shadow */
+        }
+
+        /* Brand Colors */
+        .bg-color1 {
+            background: #801735;
+        }
+
+        .bg-color2 {
+            background: #BA7967;
+        }
+
+        .bg-color3 {
+            background: #F4DA99;
+        }
+
+        .bg-color4 {
+            background: #F0DFDF;
+        }
+
+        .color-pill {
+            height: 40px;
+            border-radius: 20px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: white;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gradient Pills */
+        .grad-pill1 {
+            background: linear-gradient(to right, #801735, #F4DA99);
+            color: white;
+        }
+
+        .grad-pill2 {
+            background: linear-gradient(to right, #BA7967, #F0DFDF);
+            color: #801735;
+        }
+
+        .grad-pill3 {
+            background: linear-gradient(to right, #F4DA99, #BA7967);
+            color: #801735;
+        }
+
+        .grad-pill4 {
+            background: linear-gradient(to right, #F0DFDF, #801735);
+            color: #801735;
+        }
+
+        /* Layout & Icon Split Row */
+        .layout-icon-row {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 30px;
+        }
+
+        .layout-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .icon-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            /* Aligned to middle vertically in the column semantics */
+            justify-content: flex-start;
+        }
+
+        .icon-boxes {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            /* Spacing between the boxes */
+            align-items: center;
+            height: 100%;
+            justify-content: space-between;
+            /* Stretches boxes to align top and bottom with the layout column */
+        }
+
+        .icon-box {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-box img {
+            width: 80%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Right Panel Wrapper for Bookmarks & Typography */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 40px;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        /* Bookmarks / Ribbons */
+        .bookmarks-container {
+            display: flex;
+            gap: 45px;
+        }
+
+        .bookmark {
+            width: 340px;
+            height: 650px;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 82%, 0% 100%);
+            transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        .bookmark img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .bookmark.primary {
+            background: #efddde;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        .bookmark.secondary {
+            background: #6a0b25;
+        }
+
+        /* Typography Section */
+        .typography-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
+            /* Delayed entrance */
+        }
+
+        .typography-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #5c5c5c;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .typography-images {
+            display: flex;
+            gap: 10px;
+            align-items: left;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .typography-images img {
+            width: calc(50% - 10px);
+            max-height: 124px;
+            /* Constrain updated file heights */
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Pattern Section */
+        .pattern-boxes {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .pattern-box {
+            width: calc(50% - 10px);
+            height: 207px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pattern-box.p1 {
+            background: #f3d998;
+        }
+
+        .pattern-box.p2 {
+            background: #7f1534;
+        }
+
+        .pattern-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Allowing transparent patterns to show bg color through, or if opaque, just fit nicely */
+        }
+
+        .project-details.active .bookmark,
+        .project-details.active .typography-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-details:not(.active) .bookmark,
+        .project-details:not(.active) .typography-container {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        /* =============================================
+           BRANDING LAYOUT (Desktop flow wrapper)
+           ============================================= */
+        .branding-layout {
+            display: flex;
+            width: 100%;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* =============================================
+           HAMBURGER MENU
+           ============================================= */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            top: 25px;
+            right: 28px;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            transform: scale(1.05);
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .hamburger-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 45;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* =============================================
+           RESPONSIVE: LARGE TABLET (â‰¤1399px)
+           ============================================= */
+        @media screen and (max-width: 1399px) {
+            .bookmark {
+                width: 260px;
+                height: 500px;
+                padding-top: 35px;
+            }
+
+            .bookmarks-container {
+                gap: 25px;
+            }
+
+            .right-panel {
+                gap: 30px;
+            }
+        }
+
+        /* =============================================
+           RESPONSIVE: TABLET (â‰¤1199px)
+           ============================================= */
+        @media screen and (max-width: 1199px) {
+            .project-details {
+                padding: 60px 50px;
+            }
+
+            .branding-layout {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .right-panel {
+                align-items: center;
+                width: 100%;
+            }
+
+            .bookmarks-container {
+                justify-content: center;
+            }
+
+            .project-main-content {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .white-box {
+                max-width: 100%;
+            }
+
+            .project-title {
+                font-size: 2.5rem;
+            }
+
+            .mockup-title {
+                font-size: 2.5rem;
+            }
+
+            .mockups-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mockup-item {
+                height: 300px;
+            }
+
+            .uiux-layout {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .uiux-left {
+                justify-content: center;
+            }
+
+            .uiux-left img {
+                max-width: 450px;
+            }
+
+            .carousel-track img {
+                height: 360px;
+            }
+
+            .typography-container {
+                align-items: center;
+            }
+
+            .typography-images {
+                justify-content: center;
+            }
+        }
+
+        /* =============================================
+           RESPONSIVE: MOBILE (â‰¤768px)
+           ============================================= */
+        @media screen and (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: auto;
+            }
+
+            .hamburger-btn {
+                display: flex;
+            }
+
+            .mobile-overlay {
+                display: block;
+            }
+
+            .liquid-sidebar {
+                transform: translateX(-110%);
+                transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+
+            .liquid-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .project-content {
+                position: relative;
+                left: 0;
+                width: 100%;
+                min-height: 100vh;
+            }
+
+            .project-details {
+                position: relative;
+                padding: 80px 20px 40px;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .branding-layout {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .right-panel {
+                order: -1;
+                align-items: center;
+                width: 100%;
+            }
+
+            .bookmarks-container {
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .bookmark {
+                width: 150px;
+                height: 300px;
+                padding-top: 20px;
+            }
+
+            .project-main-content {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .white-box {
+                max-width: 100%;
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .project-title {
+                font-size: 1.8rem;
+            }
+
+            .mockup-title {
+                font-size: 1.8rem;
+            }
+
+            .pill-tag {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+
+            .project-description {
+                font-size: 0.95rem;
+                margin: 0 0 20px 0;
+            }
+
+            .logo-logic-container {
+                gap: 15px;
+            }
+
+            .logo-logic-item img {
+                height: 50px;
+            }
+
+            .logo-logic-operator {
+                font-size: 1.5rem;
+                padding-bottom: 20px;
+            }
+
+            .logo-logic-label {
+                font-size: 0.8rem;
+            }
+
+            .horizontal-line {
+                margin: 5px 0;
+            }
+
+            .layout-icon-row {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .icon-col {
+                width: 100%;
+            }
+
+            .icon-boxes {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .icon-box {
+                width: 130px;
+                height: 130px;
+                border-radius: 16px;
+            }
+
+            .horizontal-layout-title {
+                font-size: 1.2rem;
+            }
+
+            .horizontal-layout-img {
+                max-width: 100%;
+            }
+
+            .color-scheme-container {
+                max-width: 100%;
+            }
+
+            .color-circle {
+                width: 35px;
+                height: 35px;
+            }
+
+            .color-pill {
+                height: 35px;
+                font-size: 0.85rem;
+                padding: 0 18px;
+            }
+
+            .mockups-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .mockup-item {
+                height: 160px;
+                border-radius: 8px;
+            }
+
+            .mockups-section {
+                gap: 25px;
+                margin-top: 5vh;
+            }
+
+            .uiux-layout {
+                flex-direction: column;
+                gap: 25px;
+                margin-top: 10px;
+            }
+
+            .uiux-left {
+                justify-content: center;
+            }
+
+            .uiux-left img {
+                max-width: 260px;
+            }
+
+            .uiux-circle {
+                width: 180px;
+                height: 180px;
+            }
+
+            .uiux-right {
+                gap: 15px;
+            }
+
+            .uiux-desc {
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+
+            .uiux-divider {
+                width: 120px;
+            }
+
+            .carousel-track img {
+                height: 220px;
+                margin-right: 10px;
+                border-radius: 8px;
+            }
+
+            .uiux-carousel-container {
+                margin-top: 40px;
+            }
+
+            .uiux-section {
+                gap: 25px;
+                padding-bottom: 40px;
+                margin-top: 3vh;
+            }
+
+            .typography-container {
+                align-items: center;
+            }
+
+            .typography-title {
+                font-size: 1.2rem;
+            }
+
+            .typography-images {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .typography-images img {
+                width: 80%;
+                max-height: none;
+            }
+
+            .pattern-box {
+                height: 110px;
+            }
+
+            .back-btn {
+                top: 20px;
+                left: 20px;
+                font-size: 11px;
+            }
+
+            .blob {
+                opacity: 0.2;
+            }
+
+            .sidebar-dots {
+                padding: 90px 0;
+                gap: 25px;
+            }
+
+            .nav-dot {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        /* =============================================
+           RESPONSIVE: SMALL MOBILE (â‰¤480px)
+           ============================================= */
+        @media screen and (max-width: 480px) {
+            .project-details {
+                padding: 70px 15px 30px;
+            }
+
+            .bookmark {
+                width: 130px;
+                height: 260px;
+                padding-top: 15px;
+            }
+
+            .bookmarks-container {
+                gap: 10px;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .mockup-title {
+                font-size: 1.5rem;
+            }
+
+            .mockup-item {
+                height: 130px;
+            }
+
+            .logo-logic-item img {
+                height: 40px;
+            }
+
+            .logo-logic-operator {
+                font-size: 1.2rem;
+                padding-bottom: 15px;
+            }
+
+            .icon-box {
+                width: 110px;
+                height: 110px;
+            }
+
+            .carousel-track img {
+                height: 180px;
+            }
+
+            .uiux-left img {
+                max-width: 200px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-	<div class="app-container">
-		<!-- Sidebar -->
-		<nav class="sidebar-container">
-			<div class="sidebar-header">
-				<a href="index.html" class="back-link"><i class="icon-arrow-left2"></i><span>Back</span></a>
-			</div>
-			<div class="sidebar-scroll" id="nav-list">
-				<div class="nav-item active" data-index="0">
-					<div class="temp-circle">1</div>
-				</div>
-				<div class="nav-item" data-index="1">
-					<div class="temp-circle">2</div>
-				</div>
-				<div class="nav-item" data-index="2">
-					<div class="temp-circle">3</div>
-				</div>
-				<div class="nav-item" data-index="3">
-					<div class="temp-circle">4</div>
-				</div>
-				<div class="nav-item" data-index="4">
-					<div class="temp-circle">5</div>
-				</div>
-				<div class="nav-item" data-index="5">
-					<div class="temp-circle">6</div>
-				</div>
-				<div class="nav-item" data-index="6">
-					<div class="temp-circle">7</div>
-				</div>
-			</div>
-			<!-- Simple 'v' icon below the scroll area -->
-			<div class="scroll-helper" id="scrollHelper">
-				<i class="icon-arrow-down2"></i>
-			</div>
-		</nav>
 
-		<!-- Main Content -->
-		<main class="main-content" id="mainContent">
-			<!-- Background blobs -->
-			<div class="blob blob-1"></div>
-			<div class="blob blob-2"></div>
-			<div class="blob blob-3"></div>
+    <a href="index.html" class="back-btn">Back</a>
 
-			<div class="project-display" id="project-display">
-				<div class="project-hero temp-image">
-					<span>Project Hero Image</span>
-				</div>
-				
-				<div class="project-info">
-					<h1 class="project-title">Project Title</h1>
-					<p class="project-desc">This is a placeholder description. You can later inject the exact descriptions of each project dynamically via Javascript or by rendering different HTML sections.</p>
-				</div>
+    <!-- Hamburger Menu Button (Mobile) -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-				<div class="wip-section">
-					<h3 class="wip-title">Draft & Work in Progress</h3>
-					<div class="wip-grid">
-						<div class="wip-card temp-image"><span>Draft Image</span></div>
-						<div class="wip-card temp-image"><span>Process Image</span></div>
-						<div class="wip-card temp-image"><span>Final Detail</span></div>
-					</div>
-				</div>
-			</div>
-		</main>
-	</div>
+    <!-- Liquid Sidebar Navigation -->
+    <nav class="liquid-sidebar" id="liquidSidebar">
+        <div class="sidebar-inner" id="sidebarInner">
+            <div class="sidebar-dots" id="sidebarDots">
+                <button class="nav-dot active" data-index="0" id="navDot0">
+                    <img src="images/whispering cats/logo-cat-active.png" alt="Whispering Cats Logo">
+                </button>
+                <button class="nav-dot" data-index="1" id="navDot1">
+                    <img src="images/the velvet brew/logo-brew-inactive.png" alt="The Velvet Brew Logo">
+                </button>
+                <button class="nav-dot" data-index="2" id="navDot2">
+                    <img src="images/tales of reverie/logo-tales-inactive.png" alt="Tales of Reverie Logo">
+                </button>
+                <button class="nav-dot" data-index="3" id="navDot3">
+                    <img src="images/incubase/logo-incubase-inactive.png" alt="INCUBASE Studio Malaysia Logo">
+                </button>
+            </div>
+        </div>
+    </nav>
 
-	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-			const navItems = document.querySelectorAll('.nav-item');
-			const projectDisplay = document.getElementById('project-display');
-			const projectTitle = document.querySelector('.project-title');
-			const projectDesc = document.querySelector('.project-desc');
-			const mainContent = document.getElementById('mainContent');
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
 
-			// Temporary Project Data
-			const projectsData = [
-				{
-					title: "Whispering Cats",
-					desc: "Whispering Cats is my university final project. This game is designed to support SDG 3 — Good Health & Well-Being by promoting emotional awareness through gentle interaction and storytelling. It is a cozy clicker game designed to help players relax while learning simple mental health insights."
-				},
-				{
-					title: "The Velvet Brew",
-					desc: "A branding project for The Velvet Brew. A cozy library cafe that brings together two comforting things — warm drinks and good stories."
-				},
-				{
-					title: "Tales of Reverie",
-					desc: "A printed portfolio that blends fantasy illustration with the charm of a vintage book aesthetic. It features elegant typography paired with decorative ornaments and patterns to create a refined look, while maintaining a sense of simplicity to avoid feeling too overwhelming."
-				},
-				{
-					title: "Crayon Shinchan",
-					desc: "This project showcases my involvement in the Shinchan Exhibition during my internship, where I contributed to the design of social media content, merchandise, and various venue promotional materials. The work focused on maintaining brand consistency while creating engaging visuals suitable for both digital and physical applications."
-				},
-				{
-					title: "Digimon Adventure",
-					desc: "As part of the Digimon Exhibition project, I worked on designing a range of promotional materials including social media content, merchandise items, and on-site visuals. This project required adapting key visuals across different formats while ensuring clarity, consistency, and strong visual impact for event promotion."
-				},
-				{
-					title: "INCUBASE Studio",
-					desc: "During my internship at Incubase Studio, I was involved in creating a variety of multimedia design outputs, including social media posts, printed materials, and basic video editing. This experience allowed me to work on real client-based projects, strengthen my design workflow, and adapt content across multiple platforms and formats."
-				},
-				{
-					title: "Art Exhibitions",
-					desc: "A comprehensive showcase of my traditional art pieces exhibited during 'Message' and 'A Tribute to Life'. This includes key visuals, painting studies, and sculpture works demonstrating a blend of emotional storytelling and fine arts technique."
-				}
-			];
+    <div class="project-content" id="projectContainer">
+        <!-- Project 1: Whispering Cats -->
+        <div class="project-details active" data-index="0">
+            <div class="project-showcase"
+                style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 60px;">
 
-			navItems.forEach(item => {
-				item.addEventListener('click', () => {
-					// Remove active from all
-					navItems.forEach(nav => nav.classList.remove('active'));
-					// Add active to clicked
-					item.classList.add('active');
-					
-					const idx = item.getAttribute('data-index');
-					const data = projectsData[idx];
+                <!-- Introduction Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; margin-top: 40px;">
+                    <!-- Left: Content -->
+                    <div style="text-align: left;">
+                        <h1 class="project-title" style="margin-bottom: 25px; font-size: 3.5rem;">Whispering Cats</h1>
+                        <p
+                            style="color: #5c5c5c; line-height: 1.8; font-size: 16px; text-align: justify; margin-bottom: 30px;">
+                            Whispering Cats is a cozy clicker game designed to promote calmness and emotional
+                            well-being. Built around the concept of mindfulness and gentle discovery, the game invites
+                            players to interact with and collect unique cats — each symbolizing a different aspect of
+                            mental health and self-care. Through soothing visuals, soft ambient sound, and relaxing
+                            gameplay, players gradually learn simple mental health insights as they unlock new feline
+                            companions. Each cat comes with its own personality, story, and “whisper” — a small piece of
+                            reflection or advice that connects emotional healing with everyday kindness and awareness.
+                        </p>
 
-					// Fade out display
-					projectDisplay.style.opacity = 0;
-					projectDisplay.style.transform = 'translateY(15px)';
-					
-					setTimeout(() => {
-						// Update Content
-						if(data) {
-							projectTitle.textContent = data.title;
-							projectDesc.textContent = data.desc;
-						}
-						
-						// Fade in display
-						projectDisplay.style.opacity = 1;
-						projectDisplay.style.transform = 'translateY(0)';
-						
-						// Scroll to top of main content
-						mainContent.scrollTo({ top: 0, behavior: 'smooth' });
-					}, 300);
-				});
-			});
+                        <!-- Download Button -->
+                        <div style="margin-top: 20px;">
+                            <a href="https://drive.google.com/file/d/1PWeCpCiWfFGJNbWKI-b0rUTie-enetCG/view?usp=sharing"
+                                target="_blank"
+                                style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #e8b4b8, #f3d5b5); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 15px rgba(232, 180, 184, 0.4); transition: transform 0.3s ease;">
+                                Download APK
+                            </a>
+                            <p style="margin-top: 12px; font-size: 13px; color: #888; font-style: italic;">
+                                This is just a prototype, not a complete game.
+                            </p>
+                        </div>
+                    </div>
 
-			// Handle scroll down hint visibility
-			const sidebarScroll = document.getElementById('nav-list');
-			const scrollHelper = document.getElementById('scrollHelper');
-			
-			const checkScrollHelperVisibility = () => {
-				if (!sidebarScroll || !scrollHelper) return;
-				
-				// Hide if scroll area can't scroll
-				if (sidebarScroll.scrollHeight <= sidebarScroll.clientHeight) {
-					scrollHelper.style.display = 'none';
-					return;
-				}
+                    <!-- Right: Image -->
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="images/whispering cats/Homepage-1.jpg" alt="Whispering Cats Homepage"
+                            style="width: 80%; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08);">
+                    </div>
+                </div>
 
-				scrollHelper.style.display = 'flex';
-				// Hide if scrolled close to bottom
-				if (sidebarScroll.scrollTop + sidebarScroll.clientHeight >= sidebarScroll.scrollHeight - 20) {
-					scrollHelper.style.opacity = '0';
-				} else {
-					scrollHelper.style.opacity = '1';
-				}
-			};
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
 
-			if (sidebarScroll && scrollHelper) {
-				sidebarScroll.addEventListener('scroll', checkScrollHelperVisibility);
-				window.addEventListener('resize', checkScrollHelperVisibility);
-				// Initial check
-				checkScrollHelperVisibility();
-			}
-		});
-	</script>
+                <!-- Gameplay & Key Features Intro -->
+                <div class="showcase-section scroll-animate" style="width: 100%; max-width: 900px; text-align: left;">
+                    <h2
+                        style="font-family: 'Poppins', sans-serif; font-size: 2.2rem; color: #5c5c5c; margin-bottom: 25px; font-weight: 600;">
+                        Gameplay & Key Features</h2>
+                    <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px; text-align: justify;">
+                        The game was inspired by the UN’s Sustainable Development Goal 3: Good Health and Well-being,
+                        with the goal of raising mental health awareness in a gentle, accessible way. Rather than
+                        presenting clinical information, Whispering Cats integrates emotional learning into small,
+                        comforting interactions — encouraging players to take breaks, breathe, and care for themselves.
+                    </p>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Gameplay Mechanics -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+                    <!-- Left: Subheading & Description -->
+                    <div style="text-align: left;">
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #5c5c5c; margin-bottom: 20px; font-weight: 600;">
+                            Gameplay</h3>
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px; text-align: justify;">
+                            Whispering Cats combines simple clicker mechanics with gentle storytelling. Players earn
+                            affection by tapping and interacting with cats, which can then be used to unlock new feline
+                            companions, upgrades, and decorations.
+                        </p>
+                    </div>
+
+                    <!-- Right: Cat Transition -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px;">
+                        <img src="images/whispering cats/Cat-1.png" alt="Cat Stage 1"
+                            style="width: 120px; height: auto;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#e8b4b8" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <img src="images/whispering cats/Cat-1..png" alt="Cat Stage 2"
+                            style="width: 140px; height: auto;">
+                    </div>
+                </div>
+
+                <!-- Whispers Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px;">
+                    <!-- Left: P1 Image -->
+                    <div style="display: flex; justify-content: center;">
+                        <img src="images/whispering cats/P1.png" alt="Whispering Cats Mechanic"
+                            style="width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    </div>
+
+                    <!-- Right: Whisper Description -->
+                    <div style="text-align: left;">
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px; text-align: justify;">
+                            Each time a new cat is discovered, players unlock a short story and a “Whisper” — a piece of
+                            mental health insight or self-care reminder tied to the cat’s personality. Over time, these
+                            collected Whispers form a gentle guide to emotional well-being.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Level up Progress Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; margin-bottom: 80px; text-align: left;">
+                    <div style="max-width: 900px; margin: 0 auto 40px 0;">
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #5c5c5c; margin-bottom: 15px; font-weight: 600;">
+                            Level up Progress</h3>
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px;">
+                            Unlock cats and furniture as player level up.
+                        </p>
+                    </div>
+
+                    <!-- Side-by-side Backgrounds -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                        <img src="images/whispering cats/Background-5.png" alt="Level 5 Background"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                        <img src="images/whispering cats/Background-20.png" alt="Level 20 Background"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                        <img src="images/whispering cats/Background-50.png" alt="Level 50 Background"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Minigames Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; margin-bottom: 60px; text-align: left;">
+                    <div style="max-width: 900px; margin: 0 auto 40px 0;">
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #5c5c5c; margin-bottom: 15px; font-weight: 600;">
+                            Minigames</h3>
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px;">
+                            Interact with your feline friends through various cozy minigames to build affection.
+                        </p>
+                    </div>
+
+                    <!-- Side-by-side Minigames -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                        <img src="images/whispering cats/Cuddle.png" alt="Cuddle Minigame"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                        <img src="images/whispering cats/Shower.png" alt="Shower Minigame"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                        <img src="images/whispering cats/Grooming.png" alt="Grooming Minigame"
+                            style="width: 100%; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.06);">
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Gameplay Video -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; margin-bottom: 150px; text-align: center;">
+                    <h3
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #5c5c5c; margin-bottom: 30px; font-weight: 600;">
+                        Video on Gameplay</h3>
+                    <div
+                        style="width: 100%; max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            <iframe src="https://www.youtube.com/embed/Hu4lzbqnvQQ" 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2: The Velvet Brew -->
+        <div class="project-details" data-index="1">
+            <div class="project-showcase"
+                style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 60px;">
+
+                <!-- Hero Section: Logo, Line, Description -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <!-- Centered Logo -->
+                    <img src="images/the velvet brew/Logo Design-04.png" alt="The Velvet Brew Logo"
+                        style="max-height: 600px; width: auto; margin-bottom: 30px;">
+
+                    <!-- Horizontal Line with Diamonds -->
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto 30px auto; gap: 15px;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #801735; margin: 0;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="project-description"
+                        style="max-width: 800px; color: #5c5c5c; line-height: 1.8; margin: 0;">
+                        The Velvet Brew is a cozy library cafe that brings together two comforting things — warm drinks
+                        and good stories. Inspired by vintage bookshops and fantasy worlds, it’s a place where people
+                        can relax, read, and enjoy handcrafted tea or coffee.
+                    </p>
+                </div>
+
+                <!-- Logo Logic -->
+                <div class="showcase-section scroll-animate" style="width: 100%;">
+                    <div class="logo-logic-container"
+                        style="display: flex; align-items: center; justify-content: center; gap: 30px; margin-bottom: 50px;">
+                        <div class="logo-logic-item"><img src="images/the velvet brew/logo idea-01.png" alt="Book Icon">
+                        </div>
+                        <div class="logo-logic-operator">+</div>
+                        <div class="logo-logic-item"><img src="images/the velvet brew/logo idea-02.png"
+                                alt="Tea Cup Icon"></div>
+                        <div class="logo-logic-operator">=</div>
+                        <div class="logo-logic-item"><img src="images/the velvet brew/logo idea-03.png"
+                                alt="Final Logo Concept"></div>
+                    </div>
+                    <!-- Horizontal Line Below Logo Logic with Diamonds -->
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto 30px auto; gap: 15px;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #801735; margin: 0;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+                </div>
+
+                <!-- Color Scheme & Typography -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; max-width: 900px; margin: 0 auto;">
+
+                    <!-- Color Scheme (Left) -->
+                    <div class="brand-grid-col">
+                        <div class="color-scheme-container">
+                            <div class="color-row c-row1">
+                                <div class="color-circle bg-color1"></div>
+                                <div class="color-pill grad-pill1">#801735</div>
+                            </div>
+                            <div class="color-row c-row2">
+                                <div class="color-circle bg-color2"></div>
+                                <div class="color-pill grad-pill2">#BA7967</div>
+                            </div>
+                            <div class="color-row c-row3">
+                                <div class="color-circle bg-color3"></div>
+                                <div class="color-pill grad-pill3">#F4DA99</div>
+                            </div>
+                            <div class="color-row c-row4">
+                                <div class="color-circle bg-color4"></div>
+                                <div class="color-pill grad-pill4">#F0DFDF</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography (Right) -->
+                    <div class="brand-grid-col"
+                        style="display: flex; flex-direction: column; gap: 30px; align-items: center;">
+                        <img src="images/the velvet brew/typography-1.png" alt="Typeface 1"
+                            style="width: 100%; max-width: 270px; height: auto;">
+                        <img src="images/the velvet brew/typography-2.png" alt="Typeface 2"
+                            style="width: 100%; max-width: 270px; height: auto;">
+                    </div>
+                </div>
+
+                <!-- Brand Patterns -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 900px; margin: 50px auto 30px auto;">
+                    <div
+                        style="background-color: #f4da99; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 250px;">
+                        <img src="images/the velvet brew/Pattern-01.png" alt="Pattern 1"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div
+                        style="background-color: #801735; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 250px;">
+                        <img src="images/the velvet brew/Pattern-02.png" alt="Pattern 2"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+
+                <!-- Logo Grid Bottom -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; text-align: center; margin: 20px auto 10px auto;">
+                    <img src="images/the velvet brew/Logo Design-h1-04.png" alt="Horizontal Logo"
+                        style="max-height: 250px; width: auto;">
+                </div>
+
+                <!-- Horizontal Line with Diamonds -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; max-width: 1000px; margin: 20px auto; text-align: center;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto 20px auto; gap: 15px;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #801735; margin: 0;">
+                        <span
+                            style="color: #801735; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+                </div>
+
+                <!-- 3D Carousel Section -->
+                <div class="showcase-section scroll-animate" style="width: 100%; margin: 20px auto; overflow: hidden;">
+                    <style>
+                        .mockup-carousel-wrapper {
+                            position: relative;
+                            width: 100%;
+                            height: 600px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            perspective: 1200px;
+                            margin: 0 auto;
+                        }
+
+                        .mc-btn {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            z-index: 20;
+                            background: rgba(128, 23, 53, 0.8);
+                            color: white;
+                            border: none;
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            font-size: 1.5rem;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        }
+
+                        .mc-btn:hover {
+                            background: rgba(128, 23, 53, 1);
+                        }
+
+                        .mc-btn.prev {
+                            left: 5%;
+                        }
+
+                        .mc-btn.next {
+                            right: 5%;
+                        }
+
+                        .mockup-carousel-container {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            transform-style: preserve-3d;
+                        }
+
+                        .mc-item {
+                            position: absolute;
+                            left: 50%;
+                            top: 50%;
+                            height: 480px;
+                            width: auto;
+                            border-radius: 12px;
+                            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+                            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+                            object-fit: contain;
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+                    </style>
+
+                    <h2
+                        style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #5c5c5c; text-align: center; margin-bottom: 10px;">
+                        Mockups</h2>
+
+                    <div class="mockup-carousel-wrapper">
+                        <button class="mc-btn prev" id="mc-btn-prev">&#10094;</button>
+                        <div class="mockup-carousel-container" id="mc-container">
+                            <!-- JS injected elements for layout management -->
+                        </div>
+                        <button class="mc-btn next" id="mc-btn-next">&#10095;</button>
+                    </div>
+
+                    <script>
+                        (function () {
+                            const images = [
+                                "images/the velvet brew/Mockup_-Mug.jpg",
+                                "images/the velvet brew/Mockup_Billboard.jpg",
+                                "images/the velvet brew/Mockup_Book.jpg",
+                                "images/the velvet brew/Mockup_Busines Card.jpg",
+                                "images/the velvet brew/Mockup_Envelope.jpg",
+                                "images/the velvet brew/Mockup_Paper Coffee Cup.jpg",
+                                "images/the velvet brew/Mockup_Signboard.jpg",
+                                "images/the velvet brew/Mockup_T-shirt.jpg"
+                            ];
+
+                            const container = document.getElementById('mc-container');
+                            let currentIndex = 0;
+
+                            // Create image elements
+                            const elements = images.map(src => {
+                                const img = document.createElement('img');
+                                img.src = src;
+                                img.className = 'mc-item';
+                                container.appendChild(img);
+                                return img;
+                            });
+
+                            function updateCarousel() {
+                                const total = elements.length;
+                                elements.forEach((el, index) => {
+                                    // Calculate cyclic distance
+                                    let offset = index - currentIndex;
+                                    if (offset > total / 2) offset -= total;
+                                    if (offset < -total / 2) offset += total;
+
+                                    const absOffset = Math.abs(offset);
+
+                                    if (absOffset === 0) {
+                                        el.style.transform = `translate(-50%, -50%) translateZ(0px) scale(1)`;
+                                        el.style.opacity = '1';
+                                        el.style.zIndex = '10';
+                                        el.style.visibility = 'visible';
+                                    } else if (absOffset === 1) {
+                                        const direction = offset > 0 ? 1 : -1;
+                                        el.style.transform = `translate(calc(-50% + ${direction * 400}px), -50%) translateZ(-150px) scale(0.85)`;
+                                        el.style.opacity = '0.5';
+                                        el.style.zIndex = '5';
+                                        el.style.visibility = 'visible';
+                                    } else if (absOffset === 2) {
+                                        const direction = offset > 0 ? 1 : -1;
+                                        el.style.transform = `translate(calc(-50% + ${direction * 700}px), -50%) translateZ(-300px) scale(0.7)`;
+                                        el.style.opacity = '0.2';
+                                        el.style.zIndex = '3';
+                                        el.style.visibility = 'visible';
+                                    } else {
+                                        // Hide others naturally via distance and opacity
+                                        const direction = offset > 0 ? 1 : -1;
+                                        el.style.transform = `translate(calc(-50% + ${direction * 1000}px), -50%) translateZ(-500px) scale(0.4)`;
+                                        el.style.opacity = '0';
+                                        el.style.zIndex = '1';
+                                        el.style.visibility = 'hidden';
+                                    }
+                                });
+                            }
+
+                            document.getElementById('mc-btn-prev').addEventListener('click', () => {
+                                currentIndex = (currentIndex - 1 + elements.length) % elements.length;
+                                updateCarousel();
+                            });
+
+                            document.getElementById('mc-btn-next').addEventListener('click', () => {
+                                currentIndex = (currentIndex + 1) % elements.length;
+                                updateCarousel();
+                            });
+
+                            // Initialize
+                            setTimeout(updateCarousel, 100);
+                        })();
+                    </script>
+                </div>
+
+                <!-- UI/UX Design Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; max-width: 1000px; margin: 50px auto;">
+
+                    <!-- Left: Phone Mockup with Blurry Circle -->
+                    <div style="position: relative; display: flex; justify-content: center; align-items: center;">
+                        <div
+                            style="position: absolute; width: 300px; height: 300px; background-color: #e8b4b8; border-radius: 50%; filter: blur(40px); opacity: 0.8; z-index: 0; transform: translateY(5%);">
+                        </div>
+                        <img src="images/the velvet brew/phone mock up.png" alt="UI/UX Phone Mockup"
+                            style="max-height: 700px; width: auto; position: relative; z-index: 1; object-fit: contain;">
+                    </div>
+
+                    <!-- Right: Text Content -->
+                    <div style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
+                        <h2
+                            style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #5c5c5c; margin-bottom: 20px; font-weight: 600;">
+                            UI/UX Design</h2>
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px; margin-bottom: 30px;">
+                            A UI/UX design for The Velvet Brew, a cozy library café app that allows users to browse
+                            books, borrow titles, and explore the menu within a calm, vintage-inspired interface.
+                        </p>
+
+                        <!-- Horizontal Line -->
+                        <hr
+                            style="width: 100%; height: 1px; border: none; background-color: #801735; margin: 0 0 20px 0;">
+
+                        <!-- Link -->
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px; text-align: center;">
+                            Prototype can be viewed <a
+                                href="https://www.figma.com/proto/e7fuZi44gh7oQQpDQqDAWi/The-Velvet-Brew?node-id=1-35&p=f&t=2OxUUWtv6Ady53uH-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A35"
+                                target="_blank"
+                                style="color: #801735; text-decoration: underline; font-weight: 600;">Here</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Features Box -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; max-width: 1000px; margin: 40px auto 20px auto;">
+                    <div
+                        style="position: relative; background-color: #801735; border-radius: 15px; padding: 40px 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch;">
+
+                        <!-- Left: Text -->
+                        <div style="text-align: left;">
+                            <h3
+                                style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #f6f1ee; margin-bottom: 20px; font-weight: 600;">
+                                Features</h3>
+                            <ul style="color: #f6f1ee; line-height: 1.8; font-size: 16px; padding-left: 20px;">
+                                <li style="margin-bottom: 10px;">Browse a curated collection of books available in the
+                                    café</li>
+                                <li style="margin-bottom: 10px;">Borrow and manage selected titles</li>
+                                <li style="margin-bottom: 10px;">Explore the café menu, including drinks and treats</li>
+                            </ul>
+                        </div>
+
+                        <!-- Right: Images -->
+                        <div style="position: relative; display: flex; width: 100%;">
+                            <div
+                                style="position: absolute; bottom: 0; right: 0; width: 100%; display: flex; gap: 20px; justify-content: center; align-items: flex-end;">
+                                <img src="images/the velvet brew/21.jpeg" alt="Feature Screen 1"
+                                    style="width: 45%; border-radius: 30px; border: 5px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                <img src="images/the velvet brew/14.jpeg" alt="Feature Screen 2"
+                                    style="width: 45%; border-radius: 30px; border: 5px solid #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Approach Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; max-width: 1100px; margin: 40px auto 60px auto; text-align: center;">
+                    <div
+                        style="display: flex; gap: 20px; justify-content: center; align-items: center; margin-bottom: 50px; flex-wrap: wrap;">
+                        <img src="images/the velvet brew/23.jpeg" alt="Design Screen 1"
+                            style="width: 22%; min-width: 200px; border-radius: 30px; border: 5px solid #000; box-shadow: 10px 10px 40px rgba(232, 180, 184, 0.5);">
+                        <img src="images/the velvet brew/26.jpeg" alt="Design Screen 2"
+                            style="width: 22%; min-width: 200px; border-radius: 30px; border: 5px solid #000; box-shadow: 10px 10px 40px rgba(232, 180, 184, 0.5);">
+                        <img src="images/the velvet brew/18.jpeg" alt="Design Screen 3"
+                            style="width: 22%; min-width: 200px; border-radius: 30px; border: 5px solid #000; box-shadow: 10px 10px 40px rgba(232, 180, 184, 0.5);">
+                        <img src="images/the velvet brew/12.jpeg" alt="Design Screen 4"
+                            style="width: 22%; min-width: 200px; border-radius: 30px; border: 5px solid #000; box-shadow: 10px 10px 40px rgba(232, 180, 184, 0.5);">
+                    </div>
+
+                    <div style="max-width: 800px; margin: 0 auto;">
+                        <h2
+                            style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #5c5c5c; margin-bottom: 20px; font-weight: 600;">
+                            Design Approach</h2>
+                        <p style="color: #5c5c5c; line-height: 1.8; font-size: 16px;">
+                            The interface combines minimal structure with subtle decorative elements, balancing clarity
+                            with personality. Visual choices were inspired by vintage book aesthetics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3: Tales of Reverie -->
+        <div class="project-details" data-index="2">
+            <div class="project-showcase"
+                style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 60px;">
+
+                <!-- Title & Tagline Section -->
+                <div class="showcase-section scroll-animate" style="width: 100%; text-align: center; margin-top: 40px;">
+                    <h1 class="project-title" style="margin-bottom: 15px; font-size: 3.5rem;">Tales of Reverie</h1>
+                    <p style="color: #5c5c5c; font-size: 1.2rem; font-family: 'Poppins', sans-serif;">Portfolio booklet
+                        design and motion graphic</p>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Motion Portfolio Video -->
+                <div class="showcase-section scroll-animate" style="width: 100%; text-align: center;">
+                    <h2
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; color: #5c5c5c; margin-bottom: 30px; font-weight: 600;">
+                        Motion Portfolio</h2>
+                    <div
+                        style="width: 100%; max-width: 1000px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            <iframe src="https://www.youtube.com/embed/8ORbuc2Ol8Q" 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <hr style="width: 100%; height: 1px; border: none; background-color: #e0e0e0; margin: 20px 0;">
+
+                <!-- Portfolio Gallery -->
+                <div class="showcase-section" style="width: 100%; max-width: 1200px; margin: 0 auto 100px auto;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%;">
+                        <!-- Row 1 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio2.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 2 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio3.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio4.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 3 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio5.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio6.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 4 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio7.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio8.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 5 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio9.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio10.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 6 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio11.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio12.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 7 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio13.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio14.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                        <!-- Row 8 -->
+                        <div class="scroll-animate" style="display: contents;">
+                            <img src="images/tales of reverie/Portfolio15.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                            <img src="images/tales of reverie/Portfolio16.jpg" alt="Portfolio Page"
+                                style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 4: INCUBASE Studio Malaysia -->
+        <div class="project-details" data-index="3">
+            <div class="project-showcase"
+                style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 60px;">
+
+                <!-- Hero Section: Title & Description -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 40px;">
+                    <h1 class="project-title" style="margin-bottom: 25px; font-size: 3.5rem;">INCUBASE Studio Malaysia
+                    </h1>
+                    <p style="max-width: 800px; color: #5c5c5c; line-height: 1.8; font-size: 16px; margin: 0;">
+                        Designs produced during my internship at Incubase Studio Malaysia, with selected works currently
+                        withheld due to undisclosed projects and to be added upon official release.
+                    </p>
+                </div>
+
+                <!-- Horizontal Line -->
+                <div class="showcase-section scroll-animate" style="width: 100%;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto; gap: 15px;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #e8b4b8; margin: 0;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+                </div>
+
+                <!-- Crayon Shinchan Exhibition Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h2
+                        style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #2d3436; margin-bottom: 10px;">
+                        Crayon Shinchan Space & Time Adventure Interactive Exhibition</h2>
+                    <h3
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                        Merchandise (Photocard)</h3>
+
+                    <!-- Photocard Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1100px;">
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c1.png" alt="Crayon Shinchan Photocard 1"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c2.png" alt="Crayon Shinchan Photocard 2"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c3.png" alt="Crayon Shinchan Photocard 3"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c4.png" alt="Crayon Shinchan Photocard 4"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c5.png" alt="Crayon Shinchan Photocard 5"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c6.png" alt="Crayon Shinchan Photocard 6"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c7.png" alt="Crayon Shinchan Photocard 7"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c8.png" alt="Crayon Shinchan Photocard 8"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c9.png" alt="Crayon Shinchan Photocard 9"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c10.png" alt="Crayon Shinchan Photocard 10"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c11.png" alt="Crayon Shinchan Photocard 11"></div>
+                        <div class="mockup-item" style="height: auto; aspect-ratio: 2/3;"><img
+                                src="images/shinchan/c12.png" alt="Crayon Shinchan Photocard 12"></div>
+                    </div>
+                </div>
+
+                <!-- Social Media Posts Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                        Social Media Posts</h3>
+
+                    <!-- Social Media Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; max-width: 1000px;">
+                        <div class="mockup-item" style="height: auto;"><img src="images/shinchan/IC promotion.png"
+                                alt="IC promotion"></div>
+                        <div class="mockup-item" style="height: auto;"><img
+                                src="images/shinchan/Limited Time Frame-01.png" alt="Limited Time Frame-01"></div>
+                        <div class="mockup-item" style="height: auto;"><img
+                                src="images/shinchan/Limited Time Frame-02.png" alt="Limited Time Frame-02"></div>
+                        <div class="mockup-item" style="height: auto;"><img
+                                src="images/shinchan/SC Exhibition Extend (26 Apr).png"
+                                alt="SC Exhibition Extend (26 Apr)"></div>
+                    </div>
+                </div>
+
+                <!-- Separator Line -->
+                <div class="showcase-section scroll-animate" style="width: 100%; margin-bottom: 20px;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto; gap: 15px;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #e8b4b8; margin: 0;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+                </div>
+
+                <!-- Digimon Exhibition Section -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h2
+                        style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #2d3436; margin-bottom: 10px;">
+                        Digimon Adventure Anime 25th Anniversary Exhibition</h2>
+
+                    <h3
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                        Venue Promotional Item (Floor Sticker)</h3>
+                    <!-- Floor Sticker Grid: Two Rows -->
+                    <div
+                        style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 1100px; margin-bottom: 60px;">
+                        <!-- Row 1: Footprints -->
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%;">
+                            <div class="mockup-item" style="height: auto;"><img src="images/digimon/Footprint-01.png"
+                                    alt="Footprint 01"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/digimon/Footprint-02.png"
+                                    alt="Footprint 02"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/digimon/Footprint-03.png"
+                                    alt="Footprint 03"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/digimon/Footprint-04.png"
+                                    alt="Footprint 04"></div>
+                        </div>
+                        <!-- Row 2: Floor Sticker -->
+                        <div style="display: flex; justify-content: center; width: 100%;">
+                            <div class="mockup-item" style="height: auto; width: 25%;"><img
+                                    src="images/digimon/Digimon Floor Sticker.png" alt="Digimon Floor Sticker"></div>
+                        </div>
+                    </div>
+
+                    <h3
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                        Social Media Post</h3>
+                    <!-- Social Media Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1100px;">
+                        <div class="mockup-item" style="height: 400px;"><img src="images/digimon/SNS Thank You.png"
+                                alt="SNS Thank You" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/SNS Priority Access-01.png" alt="SNS Priority Access"
+                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/SNS Purchase Benefits.png" alt="SNS Purchase Benefits"
+                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/T-shirt pre-order Chibi Rookie Digimon.png"
+                                alt="T-shirt Chibi Rookie" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/T-shirt pre-order Devimon.png" alt="T-shirt Devimon"
+                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/T-shirt pre-order Digidestined.png" alt="T-shirt Digidestined"
+                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                        <div class="mockup-item" style="height: 400px;"><img
+                                src="images/digimon/T-shirt pre-order with name.png" alt="T-shirt pre-order with name"
+                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                    </div>
+                </div>
+
+                <!-- Madoka Magica Pop Up Shop Section -->
+                <div class="showcase-section scroll-animate" style="width: 100%; margin-top: 60px;">
+                    <!-- Separator Line -->
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto 40px auto; gap: 15px;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #e8b4b8; margin: 0;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+
+                    <div
+                        style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <h2
+                            style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #2d3436; margin-bottom: 10px;">
+                            Puella Magi Madoka Magica Pop Up Shop</h2>
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                            Social Media Post</h3>
+
+                        <!-- Madoka Grid -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1100px;">
+                            <div class="mockup-item" style="height: auto;"><img
+                                    src="images/madoka magica/Merchandise Preview-01.png" alt="Merchandise Preview 01">
+                            </div>
+                            <div class="mockup-item" style="height: auto;"><img
+                                    src="images/madoka magica/Merchandise Preview-02.png" alt="Merchandise Preview 02">
+                            </div>
+                            <div class="mockup-item" style="height: auto;"><img
+                                    src="images/madoka magica/Merchandise Preview-03.png" alt="Merchandise Preview 03">
+                            </div>
+                            <div class="mockup-item" style="height: auto;"><img
+                                    src="images/madoka magica/Merchandise Preview-04.png" alt="Merchandise Preview 04">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INCUBASE Studio Section -->
+                <div class="showcase-section scroll-animate" style="width: 100%; margin-top: 60px;">
+                    <!-- Separator Line -->
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto 40px auto; gap: 15px;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #e8b4b8; margin: 0;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+
+                    <div
+                        style="width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <h2
+                            style="font-family: 'Poppins', sans-serif; font-size: 2rem; color: #2d3436; margin-bottom: 10px;">
+                            INCUBASE Studio</h2>
+
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                            Social Media Post</h3>
+                        <!-- SNS Grid -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; width: 100%; max-width: 1100px; margin-bottom: 60px;">
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/SNS 1.png"
+                                    alt="SNS 1"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/SNS 2.png"
+                                    alt="SNS 2"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/SNS 3.png"
+                                    alt="SNS 3"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/SNS 4.png"
+                                    alt="SNS 4"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/SNS 5.png"
+                                    alt="SNS 5"></div>
+                        </div>
+
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.3rem; color: #5c5c5c; font-weight: 500; margin-bottom: 40px;">
+                            Printing Material (Promotion)</h3>
+                        <!-- Printing Material Grid -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1100px;">
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/Print 1.png"
+                                    alt="Print 1"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/Print 2.png"
+                                    alt="Print 2"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/Print 3.png"
+                                    alt="Print 3"></div>
+                            <div class="mockup-item" style="height: auto;"><img src="images/incubase/Print 4.png"
+                                    alt="Print 4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Bottom Horizontal Line -->
+                <div class="showcase-section scroll-animate"
+                    style="width: 100%; padding-top: 60px; padding-bottom: 80px;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1000px; margin: 0 auto; gap: 15px;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                        <hr style="flex: 1; height: 1px; border: none; background-color: #e8b4b8; margin: 0;">
+                        <span
+                            style="color: #e8b4b8; font-size: 18px; line-height: 1; display: flex; align-items: center; margin-top: -2px;">✦</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Blobs -->
+    <div class="blob" style="width: 500px; height: 500px; background: #e8b4b8; top: -100px; left: -100px;"></div>
+    <div class="blob"
+        style="width: 600px; height: 600px; background: #f3d5b5; bottom: -150px; right: -100px; animation-delay: -5s;">
+    </div>
+    <div class="blob"
+        style="width: 400px; height: 400px; background: #b8d8d8; top: 50%; left: 50%; margin-top: -200px; margin-left: -200px; animation-delay: -8s; opacity: 0.2;">
+    </div>
+
+    <script>
+        (function () {
+            // ===== DOM ELEMENTS =====
+            const sidebarInner = document.getElementById('sidebarInner');
+            const svg = document.getElementById('sidebarSvg');
+            const svgPath = document.getElementById('sidebarPath');
+            const dots = document.querySelectorAll('.nav-dot');
+            const projectTitle = document.getElementById('projectTitle');
+
+            // ===== CONFIGURATION =====
+            const BASE_WIDTH = 110;           // Full panel width (right edge at rest)
+            const BASE_INDENT_DEPTH = 80;     // How far the right edge curves INWARD (leftward)
+            const BASE_INDENT_RADIUS = 100;    // Vertical extent of the indent (wide gentle curve)
+            const CORNER_RADIUS = 28;         // Panel corner radius
+            const ANIM_DURATION = 500;        // Animation duration in ms
+
+            // ===== STATE =====
+            let activeIndex = 0;
+            let isAnimating = false;
+
+            const projectDetails = document.querySelectorAll('.project-details');
+
+            // ===== ANIMATION =====
+            function animateTo(newIndex) {
+                if (isAnimating) return;
+
+                // Visual update on dots
+                dots[activeIndex].classList.remove('active');
+                dots[newIndex].classList.add('active');
+
+                // Update Logo images (sidebar icons)
+                dots.forEach((dot, index) => {
+                    const img = dot.querySelector('img');
+                    if (img) {
+                        const projectLogos = [
+                            { active: 'logo-cat-active.png', inactive: 'logo-cat-inactive.png', folder: 'whispering cats' },
+                            { active: 'logo-brew-active.png', inactive: 'logo-brew-inactive.png', folder: 'the velvet brew' },
+                            { active: 'logo-tales-active.png', inactive: 'logo-tales-inactive.png', folder: 'tales of reverie' },
+                            { active: 'logo-incubase-active.png', inactive: 'logo-incubase-inactive.png', folder: 'incubase' }
+                        ];
+
+                        if (projectLogos[index]) {
+                            const logo = projectLogos[index];
+                            img.src = `images/${logo.folder}/${index === newIndex ? logo.active : logo.inactive}`;
+                        }
+                    }
+                });
+
+                // Update content
+                projectDetails[activeIndex].classList.remove('active');
+                setTimeout(function () {
+                    projectDetails[newIndex].classList.add('active');
+                    isAnimating = false;
+                }, 300);
+
+                activeIndex = newIndex;
+                isAnimating = true;
+            }
+
+            // Attach click handlers
+            dots.forEach(function (dot, i) {
+                dot.addEventListener('click', function () {
+                    if (i !== activeIndex) {
+                        animateTo(i);
+                    }
+                });
+            });
+
+            // ===== HAMBURGER MENU (Mobile) =====
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const liquidSidebarEl = document.getElementById('liquidSidebar');
+
+            function closeMobileMenu() {
+                if (!hamburgerBtn) return;
+                hamburgerBtn.classList.remove('active');
+                liquidSidebarEl.classList.remove('open');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', function () {
+                    const isOpen = liquidSidebarEl.classList.contains('open');
+                    if (isOpen) {
+                        closeMobileMenu();
+                    } else {
+                        hamburgerBtn.classList.add('active');
+                        liquidSidebarEl.classList.add('open');
+                        mobileOverlay.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+
+                mobileOverlay.addEventListener('click', closeMobileMenu);
+
+                // Close menu when a nav dot is clicked on mobile
+                dots.forEach(function (dot) {
+                    dot.addEventListener('click', function () {
+                        if (window.innerWidth <= 768) {
+                            setTimeout(closeMobileMenu, 300);
+                        }
+                    });
+                });
+            }
+        })();
+
+        // Scroll Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                let delayCounter = 0;
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('in-view')) {
+                        entry.target.style.transitionDelay = `${delayCounter * 0.15}s`;
+                        entry.target.classList.add('in-view');
+                        delayCounter++;
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
+
 </html>
