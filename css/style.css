@@ -2600,6 +2600,19 @@ body.offcanvas .colorlib-nav-toggle {
   .pill-card.active::after {
     border-radius: 60px;
   }
+
+  .pill-content h3 {
+    font-size: 18px;
+    gap: 6px;
+  }
+
+  .pill-content p {
+    font-size: 13px;
+  }
+
+  .project-tag {
+    font-size: 11px;
+  }
 }
 
 .more-projects-container {
@@ -2750,5 +2763,38 @@ body.offcanvas .colorlib-nav-toggle {
   .contact-item span,
   .contact-item a {
     font-size: 16px;
+  }
+}
+
+/* ===== Mobile Sidebar Overlay Behavior ===== */
+@media screen and (max-width: 768px) {
+  body.offcanvas #colorlib-main {
+    -moz-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  body.offcanvas .colorlib-nav-toggle {
+    -moz-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  body.offcanvas::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    -webkit-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
   }
 }
