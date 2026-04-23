@@ -424,6 +424,7 @@ figure figcaption {
   display: table;
   opacity: 0;
   min-height: 500px;
+  position: relative;
   z-index: 9;
 }
 
@@ -433,6 +434,7 @@ figure figcaption {
   min-height: 700px;
   padding: 2.5em;
   position: relative;
+  z-index: 99;
 }
 
 @media screen and (max-width: 768px) {
@@ -2205,6 +2207,8 @@ body.offcanvas .colorlib-nav-toggle {
   gap: 15px;
   flex-wrap: wrap;
   margin-top: 20px !important;
+  position: relative;
+  z-index: 999;
 }
 
 .btn-pill {
@@ -2218,6 +2222,12 @@ body.offcanvas .colorlib-nav-toggle {
   text-decoration: none;
   transition: all 0.3s ease;
   border: none;
+  position: relative;
+  z-index: 999;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .btn-pill:hover {
